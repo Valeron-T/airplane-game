@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://biplane.obj" type="ArrayMesh" id=1]
+[ext_resource path="res://Plane.gd" type="Script" id=2]
+[ext_resource path="res://Camera_follow.gd" type="Script" id=3]
+
+[sub_resource type="CylinderShape" id=2]
+height = 5.0
+
+[node name="Plane" type="KinematicBody"]
+script = ExtResource( 2 )
+
+[node name="Target" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.96789, 8.87348 )
+
+[node name="Camera" type="Camera" parent="Target"]
+transform = Transform( 1, 0, 0, 0, 0.8793, 0.476269, 0, -0.476269, 0.8793, 0, 0.814482, 3.14163 )
+current = true
+fov = 65.8
+far = 500.0
+script = ExtResource( 3 )
+
+[node name="Mesh" type="Spatial" parent="."]
+
+[node name="Body" type="MeshInstance" parent="Mesh"]
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = null
+material/1 = null
+material/2 = null
+material/3 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( -0.000351828, 0.0312518, 0.999511, 0.999937, 0.0112571, 0, -0.0112516, 0.999448, -0.0312538, 0, 1.38612, 0.796477 )
+shape = SubResource( 2 )
