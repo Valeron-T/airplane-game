@@ -40,3 +40,5 @@ func _physics_process(delta):
 	velocity = -transform.basis.z * flight_speed
 	velocity = move_and_slide(velocity, Vector3.UP)
 
+func _process(delta):
+	$Mesh/Body/AnimationPlayer.play("PropAction001")
