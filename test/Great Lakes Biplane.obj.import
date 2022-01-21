@@ -1,0 +1,20 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Great Lakes Biplane.obj-7489998ea7600796b01347a4655053a1.mesh"
+
+[deps]
+
+files=[ "res://.import/Great Lakes Biplane.obj-7489998ea7600796b01347a4655053a1.mesh" ]
+
+source_file="res://Great Lakes Biplane.obj"
+dest_files=[ "res://.import/Great Lakes Biplane.obj-7489998ea7600796b01347a4655053a1.mesh", "res://.import/Great Lakes Biplane.obj-7489998ea7600796b01347a4655053a1.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+octahedral_compression=true
+optimize_mesh_flags=4286
