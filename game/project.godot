@@ -11,8 +11,13 @@ config_version=4
 [application]
 
 config/name="test"
-run/main_scene="res://Universe.tscn"
+run/main_scene="res://MainMenu.tscn"
 config/icon="res://icon.png"
+
+[display]
+
+window/size/width=1280
+window/size/height=720
 
 [input]
 

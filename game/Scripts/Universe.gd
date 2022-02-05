@@ -1,8 +1,16 @@
 extends Spatial
 
-var scene = preload("res://Plane.tscn")
+var scene_1 = preload("res://Plane.tscn")
+var scene_3 = preload("res://Portal.tscn")
+
+# Number of portals in scene
+var portal_count = 0
 
 var world_number = 1
+
+# Initialise coordinates of portal
+var portal_spawn_loc = Vector3()
+
 
 #Saves game
 func save_game():
@@ -68,15 +76,15 @@ signal teleportation_complete
 
 func _input(event):
 	if event.is_action_pressed("teleport"):
-		world_number += 1
 		teleport()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	pass
 
 #function to play teleport animation
 func teleport():
+	world_number += 1
 	$TeleportScreen/AnimationPlayer.play("into_teleport")
 
 #singal function to alert that teleport animation has finished
@@ -101,3 +109,30 @@ func _on_AnimationPlayer_animation_started(anim_name):
 		if world_number % 5 == 0:
 			$world4.visible = not $world4.visible
 			$base_world.visible = not $base_world.visible
+			world_number = 1
+
+func _process(delta):
+	# Executes if no portals are already instanced
+	if portal_count < 1:
+		randomize()
+		# Randomize portal coordinates
+		portal_spawn_loc.x = rand_range(-200,200)
+		portal_spawn_loc.y = rand_range(30,40)
+		portal_spawn_loc.z = rand_range(-200,200)
+		# Adds portal to main scene
+		var portal_scene = preload("res://Portal.tscn").instance()
+		portal_scene.set_translation(portal_spawn_loc)
+		add_child(portal_scene)
+		# Increments active portal count
+		portal_count += 1
+
+
+func _on_Plane_teleport_now():
+	# Decrements portal count as it is deleted
+	portal_count -= 1
+	teleport()
+
+
+
+
+

@@ -1,5 +1,8 @@
 extends KinematicBody
 
+signal teleport_now
+
+var teleport_complete = 0
 # Airspeed
 var flight_speed = 30
 # Turn rate
@@ -61,6 +64,19 @@ func _physics_process(delta):
 	# Velocity and forward movement
 	velocity = -transform.basis.z * flight_speed
 	velocity = move_and_slide(velocity, Vector3.UP)
+	queue_teleport()
+	
+	
+	
+func queue_teleport():
+	var slide_count = get_slide_count()
+	if slide_count:
+		var collision = get_slide_collision(slide_count - 1)
+		var collider = collision.collider
+		print(collider.name)
+		if collider.name == 'PortalBody':
+			emit_signal('teleport_now')
+			collider.queue_free()
 	
 	
 func _process(delta):
@@ -75,4 +91,5 @@ func _process(delta):
 	rotation_z = rad2deg($Mesh.global_transform.basis.get_euler().z)
 	# Debug code
 	# print(location_x, " ", location_y, " ", location_z)
+	
 	
