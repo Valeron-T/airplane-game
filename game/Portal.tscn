@@ -1,0 +1,78 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Textures/PNG (Transparent)/light_03.png" type="Texture" id=1]
+[ext_resource path="res://Textures/PNG (Transparent)/spark_04.png" type="Texture" id=2]
+[ext_resource path="res://Scripts/Portal.gd" type="Script" id=3]
+[ext_resource path="res://Textures/Portal_circle.tres" type="Material" id=4]
+[ext_resource path="res://Textures/portal_sparks.tres" type="Material" id=5]
+
+[sub_resource type="SphereShape" id=12]
+radius = 5.20681
+
+[sub_resource type="SpatialMaterial" id=2]
+flags_transparent = true
+flags_unshaded = true
+vertex_color_use_as_albedo = true
+params_blend_mode = 1
+params_billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+albedo_texture = ExtResource( 1 )
+depth_enabled = true
+depth_scale = 16.0
+depth_deep_parallax = true
+depth_min_layers = 8
+depth_max_layers = 32
+depth_flip_tangent = false
+depth_flip_binormal = false
+
+[sub_resource type="QuadMesh" id=8]
+
+[sub_resource type="SpatialMaterial" id=9]
+flags_transparent = true
+flags_unshaded = true
+vertex_color_use_as_albedo = true
+params_blend_mode = 1
+params_billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+albedo_texture = ExtResource( 2 )
+
+[sub_resource type="QuadMesh" id=11]
+
+[node name="Portal" type="Spatial"]
+script = ExtResource( 3 )
+
+[node name="PortalBody" type="KinematicBody" parent="."]
+
+[node name="CollisionShape" type="CollisionShape" parent="PortalBody"]
+transform = Transform( 1, 0, 0, 0, -0.00413648, -0.999991, 0, 0.999991, -0.00413648, 0, 0, 0 )
+shape = SubResource( 12 )
+
+[node name="Circles" type="Particles" parent="PortalBody"]
+material_override = SubResource( 2 )
+cast_shadow = 0
+amount = 40
+lifetime = 0.17
+speed_scale = 0.05
+visibility_aabb = AABB( -4, -4, -3.98842, 8, 8, 7.97683 )
+local_coords = false
+process_material = ExtResource( 4 )
+draw_pass_1 = SubResource( 8 )
+
+[node name="Sparks" type="Particles" parent="PortalBody"]
+material_override = SubResource( 9 )
+cast_shadow = 0
+amount = 20
+lifetime = 2.3
+visibility_aabb = AABB( -3.97492, -4, -4, 7.94984, 8, 8 )
+draw_order = 2
+process_material = ExtResource( 5 )
+draw_pass_1 = SubResource( 11 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 100.0
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
