@@ -74,10 +74,6 @@ func load_game():
 signal teleported
 signal teleportation_complete
 
-func _input(event):
-	if event.is_action_pressed("teleport"):
-		teleport()
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass
@@ -86,6 +82,7 @@ func _ready():
 func teleport():
 	world_number += 1
 	$TeleportScreen/AnimationPlayer.play("into_teleport")
+	
 
 #singal function to alert that teleport animation has finished
 func _on_AnimationPlayer_animation_finished(anim_name):
@@ -96,6 +93,7 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 
 func _on_AnimationPlayer_animation_started(anim_name):
 	if anim_name == "outof_teleport":
+		$Plane.visible = not $Plane.visible
 		emit_signal("teleportation_complete")
 		if world_number == 2:
 			$base_world.visible = not $base_world.visible
@@ -130,9 +128,11 @@ func _process(delta):
 func _on_Plane_teleport_now():
 	# Decrements portal count as it is deleted
 	portal_count -= 1
+	$Plane.visible = not $Plane.visible
 	teleport()
+	
 
-
-
-
-
+func _on_Quit_pressed():
+	self.queue_free()
+	get_tree().change_scene("res://MainMenu.tscn")
+	
