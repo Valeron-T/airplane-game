@@ -73,6 +73,8 @@ process_material = ExtResource( 5 )
 draw_pass_1 = SubResource( 11 )
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 100.0
+wait_time = 20.0
+one_shot = true
 
+[connection signal="gameplay_entered" from="." to="." method="_on_Portal_gameplay_entered"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

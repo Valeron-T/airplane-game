@@ -8,3 +8,4 @@ func _ready():
 
 func _on_PlayButton_pressed():
 	get_tree().change_scene("res://Universe.tscn")
+	self.queue_free()
