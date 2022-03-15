@@ -1,0 +1,20 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/handcart.obj-4b04493cd68e72f7bc5ecfdee67b84db.mesh"
+
+[deps]
+
+files=[ "res://.import/handcart.obj-4b04493cd68e72f7bc5ecfdee67b84db.mesh" ]
+
+source_file="res://Models/handcart.obj"
+dest_files=[ "res://.import/handcart.obj-4b04493cd68e72f7bc5ecfdee67b84db.mesh", "res://.import/handcart.obj-4b04493cd68e72f7bc5ecfdee67b84db.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+octahedral_compression=true
+optimize_mesh_flags=4286

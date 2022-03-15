@@ -1,0 +1,84 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://menu_font.tres" type="Theme" id=1]
+[ext_resource path="res://Countdown.gd" type="Script" id=2]
+[ext_resource path="res://Control2.gd" type="Script" id=3]
+
+[node name="HUD" type="Node"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+margin_left = 132.0
+margin_top = 2.0
+margin_right = 172.0
+margin_bottom = 42.0
+theme = ExtResource( 1 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+minutes = 2
+
+[node name="minutes" type="Label" parent="CanvasLayer/Control"]
+margin_left = 1196.0
+margin_top = 12.0
+margin_right = 1268.0
+margin_bottom = 75.0
+rect_scale = Vector2( 0.798, 0.809 )
+text = "00"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="sec" type="Label" parent="CanvasLayer/Control"]
+anchor_left = 0.175
+anchor_right = 0.175
+anchor_bottom = 0.35
+margin_left = 1125.0
+margin_top = 13.0
+margin_right = 1197.0
+margin_bottom = 62.0
+rect_scale = Vector2( 0.798364, 0.809041 )
+text = "00"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="mlsec" type="Label" parent="CanvasLayer/Control"]
+margin_left = 1066.0
+margin_top = 13.0
+margin_right = 1138.0
+margin_bottom = 76.0
+rect_scale = Vector2( 0.798, 0.809 )
+theme = ExtResource( 1 )
+text = "00"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Timer" type="Timer" parent="CanvasLayer/Control"]
+process_mode = 0
+wait_time = 0.1
+
+[node name="Control2" type="Control" parent="CanvasLayer"]
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="score" type="Label" parent="CanvasLayer/Control2"]
+margin_left = 25.0
+margin_top = 22.0
+margin_right = 615.0
+margin_bottom = 85.0
+rect_scale = Vector2( 0.531638, 0.577323 )
+theme = ExtResource( 1 )
+text = "Packages Delivered : 0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="timeout" from="CanvasLayer/Control/Timer" to="CanvasLayer/Control" method="_on_Timer_timeout"]

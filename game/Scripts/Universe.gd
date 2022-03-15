@@ -1,16 +1,28 @@
 extends Spatial
 
+signal delivery_done
+
 var scene_1 = preload("res://Plane.tscn")
 var scene_3 = preload("res://Portal.tscn")
+var scene_4 = preload("res://Beacon.tscn")
+var hud = preload("res://HUD.tscn")
 
 # Number of portals in scene
-var portal_count = 0
+var portal_count = 1
+var score = 0
+
+# Number of delivery loations in scene
+var delivery_loc = 0
 
 var world_number = 1
 
 # Initialise coordinates of portal
 var portal_spawn_loc = Vector3()
 
+# Initialise coordinates of delivery location
+var delivery_loc_spawn_loc = Vector3()
+
+onready var game_start_time = OS.get_ticks_msec()
 
 #Saves game
 func save_game():
@@ -76,11 +88,16 @@ signal teleportation_complete
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
+	pass	
+
+func deliver():
+	$HUD/CanvasLayer/Control2.score += 1
+	
 
 #function to play teleport animation
 func teleport():
-	world_number += 1
+	randomize()
+	world_number = randi()%4+1
 	$TeleportScreen/AnimationPlayer.play("into_teleport")
 	
 
@@ -95,23 +112,41 @@ func _on_AnimationPlayer_animation_started(anim_name):
 	if anim_name == "outof_teleport":
 		$Plane.visible = not $Plane.visible
 		emit_signal("teleportation_complete")
+		if world_number == 1:
+			$base_world.visible = true
+			$world2.visible = false
+			$world3.visible = false
+			$world4.visible = false
+			
 		if world_number == 2:
-			$base_world.visible = not $base_world.visible
-			$world2.visible = not $world2.visible
+			$base_world.visible = false 
+			$world2.visible = true
+			$world3.visible = false
+			$world4.visible = false
+			
 		if world_number == 3:
-			$world2.visible = not $world2.visible
-			$world3.visible = not $world3.visible
+			$base_world.visible = false 
+			$world2.visible = false
+			$world3.visible = true
+			$world4.visible = false
+	
 		if world_number == 4:
-			$world3.visible = not $world3.visible
-			$world4.visible = not $world4.visible
-		if world_number % 5 == 0:
-			$world4.visible = not $world4.visible
-			$base_world.visible = not $base_world.visible
-			world_number = 1
-
+			$base_world.visible = false 
+			$world2.visible = false
+			$world3.visible = false
+			$world4.visible = true
+			
+			
+func _unhandled_input(event):	
+	if event.is_action_pressed("spawn_portal"):
+		if portal_count == 1:
+			portal_count = 0
+		
+	
 func _process(delta):
 	# Executes if no portals are already instanced
-	if portal_count < 1:
+	
+	if portal_count == 0:
 		randomize()
 		# Randomize portal coordinates
 		portal_spawn_loc.x = rand_range(-200,200)
@@ -123,12 +158,26 @@ func _process(delta):
 		add_child(portal_scene)
 		# Increments active portal count
 		portal_count += 1
+		
+	
+	
+	# Executes if no delivery loations are already instanced
+	if delivery_loc == 0:
+		randomize()
+		# Randomize delivery loc coordinates
+		delivery_loc_spawn_loc.x = rand_range(-200,200)
+		delivery_loc_spawn_loc.z = rand_range(-200,200)
+		# Adds beacon to main scene
+		var delivery_loc_scene = preload("res://Beacon.tscn").instance()
+		delivery_loc_scene.set_translation(delivery_loc_spawn_loc)
+		add_child(delivery_loc_scene)
+		# Increments active beacon count
+		delivery_loc += 1
 
 
 func _on_Plane_teleport_now():
-	# Decrements portal count as it is deleted
-	portal_count -= 1
 	$Plane.visible = not $Plane.visible
+	delivery_loc = 0
 	teleport()
 	
 
@@ -136,3 +185,7 @@ func _on_Quit_pressed():
 	self.queue_free()
 	get_tree().change_scene("res://MainMenu.tscn")
 	
+
+func _on_Plane_package_deliv():
+	deliver()
+	$HUD/CanvasLayer/Control.sec += 5
