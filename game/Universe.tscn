@@ -85,7 +85,10 @@ tracks/0/keys = {
 script = ExtResource( 5 )
 
 [node name="Plane" parent="." groups=["Persist"] instance=ExtResource( 2 )]
-transform = Transform( 0.999964, 0, -0.0084822, 0, 1, 0, 0.0084822, 0, 0.999964, -3.97181, 15.8383, 0 )
+transform = Transform( 0.999964, 0, -0.0084822, 0, 1, 0, 0.0084822, 0, 0.999964, 12.845, 15.8383, 0 )
+
+[node name="CollisionShape" parent="Plane" index="0"]
+transform = Transform( 1, 0, 9.31323e-10, 0, 1, 0, -9.31323e-10, 0, 1, 0.0628741, 0.0693293, -0.000533231 )
 
 [node name="base_world" parent="." instance=ExtResource( 1 )]
 
@@ -94,6 +97,9 @@ material_override = SubResource( 20 )
 
 [node name="DirectionalLight" parent="base_world" index="2"]
 transform = Transform( 0.0555936, 0.997615, 0.0409229, -0.909093, 0.0336274, 0.415234, 0.412867, -0.0602871, 0.908794, 0, 391.65, 0 )
+
+[node name="Decor-world1" parent="base_world" index="4"]
+visible = true
 
 [node name="world2" parent="." instance=ExtResource( 1 )]
 visible = false
