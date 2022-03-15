@@ -73,11 +73,13 @@ func queue_teleport():
 	if slide_count:
 		var collision = get_slide_collision(slide_count - 1)
 		var collider = collision.collider
-		print(collider.name)
 		if collider.name == 'PortalBody':
 			emit_signal('teleport_now')
 			collider.queue_free()
-	
+		
+		if collider.name == 'Beaconbody':
+			emit_signal('package_deliv')
+			collider.queue_free()
 	
 func _process(delta):
 	# Properller animation5
