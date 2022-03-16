@@ -7,5 +7,9 @@ func _ready():
 
 
 func _on_PlayButton_pressed():
-	get_tree().change_scene("res://Universe.tscn")
+	get_tree().change_scene("res://HowToPlay.tscn")
 	self.queue_free()
+
+
+func _on_EXIT_pressed():
+	get_tree().quit()

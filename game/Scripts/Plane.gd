@@ -1,6 +1,7 @@
 extends KinematicBody
 
 signal teleport_now
+signal package_deliv
 
 var teleport_complete = 0
 # Airspeed
@@ -64,20 +65,31 @@ func _physics_process(delta):
 	# Velocity and forward movement
 	velocity = -transform.basis.z * flight_speed
 	velocity = move_and_slide(velocity, Vector3.UP)
+	queue_deliver()
 	queue_teleport()
 	
 	
+func queue_deliver():
+	var slide_count = get_slide_count()
+	if slide_count:
+		var collision = get_slide_collision(slide_count - 1)
+		var collider = collision.collider
+		
+		if collider.name == 'Beacon':
+			emit_signal('package_deliv')
+			collider.queue_free()
 	
 func queue_teleport():
 	var slide_count = get_slide_count()
 	if slide_count:
 		var collision = get_slide_collision(slide_count - 1)
 		var collider = collision.collider
-		print(collider.name)
+		
 		if collider.name == 'PortalBody':
 			emit_signal('teleport_now')
 			collider.queue_free()
 	
+
 	
 func _process(delta):
 	# Properller animation5
