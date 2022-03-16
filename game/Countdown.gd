@@ -1,6 +1,5 @@
 extends Control
 
-
 export (int) var minutes = 0
 export (int) var sec = 0
 var mlsec = 0
@@ -32,3 +31,4 @@ func _physics_process(delta):
 
 func _on_Timer_timeout():
 	mlsec -= 1
+

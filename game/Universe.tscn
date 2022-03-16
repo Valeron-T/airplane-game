@@ -158,9 +158,6 @@ anims/outof_teleport = SubResource( 17 )
 
 [node name="HUD" parent="." instance=ExtResource( 8 )]
 
-[node name="Control" parent="HUD/CanvasLayer" index="0"]
-minutes = 1
-
 [node name="minutes" parent="HUD/CanvasLayer/Control" index="0"]
 margin_left = 1066.0
 margin_top = 13.0
@@ -173,8 +170,8 @@ margin_top = 12.0
 margin_right = 1267.0
 margin_bottom = 75.0
 
-[node name="Timer" parent="HUD/CanvasLayer/Control" index="3"]
-autostart = true
+[node name="Timer2" parent="HUD/CanvasLayer/Control" index="4"]
+process_mode = 1
 
 [node name="Control2" type="Control" parent="HUD/CanvasLayer" index="2"]
 margin_right = 40.0
@@ -189,6 +186,7 @@ __meta__ = {
 [connection signal="animation_finished" from="TeleportScreen/AnimationPlayer" to="TeleportScreen" method="_on_AnimationPlayer_animation_finished"]
 [connection signal="animation_started" from="TeleportScreen/AnimationPlayer" to="." method="_on_AnimationPlayer_animation_started"]
 [connection signal="pressed" from="PauseMenu/PauseMenu/CenterContainer/VBoxContainer/Quit" to="." method="_on_Quit_pressed"]
+[connection signal="timeout" from="HUD/CanvasLayer/Control/Timer2" to="." method="_on_Timer2_timeout"]
 
 [editable path="Plane"]
 [editable path="base_world"]

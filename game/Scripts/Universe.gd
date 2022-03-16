@@ -92,6 +92,8 @@ func _ready():
 
 func deliver():
 	$HUD/CanvasLayer/Control2.score += 1
+	if portal_count == 1:
+		portal_count = 0
 	
 
 #function to play teleport animation
@@ -135,12 +137,7 @@ func _on_AnimationPlayer_animation_started(anim_name):
 			$world2.visible = false
 			$world3.visible = false
 			$world4.visible = true
-			
-			
-func _unhandled_input(event):	
-	if event.is_action_pressed("spawn_portal"):
-		if portal_count == 1:
-			portal_count = 0
+
 		
 	
 func _process(delta):
@@ -189,3 +186,12 @@ func _on_Quit_pressed():
 func _on_Plane_package_deliv():
 	deliver()
 	$HUD/CanvasLayer/Control.sec += 5
+	if $HUD/CanvasLayer/Control.sec >=60:
+		$HUD/CanvasLayer/Control.minutes += 1
+	
+	$HUD/CanvasLayer/Control/Timer2.wait_time += 5
+
+
+func _on_Timer2_timeout():
+	self.queue_free()
+	get_tree().change_scene("res://GameOver.tscn")
