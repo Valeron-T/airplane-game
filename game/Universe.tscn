@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://main.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Plane.tscn" type="PackedScene" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Scripts/Universe.gd" type="Script" id=5]
 [ext_resource path="res://Textures/futuristicground.jpg" type="Texture" id=6]
 [ext_resource path="res://PauseMenu.tscn" type="PackedScene" id=7]
+[ext_resource path="res://HUD.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Textures/sand.jpg" type="Texture" id=9]
 
 [sub_resource type="SpatialMaterial" id=20]
@@ -85,7 +86,10 @@ tracks/0/keys = {
 script = ExtResource( 5 )
 
 [node name="Plane" parent="." groups=["Persist"] instance=ExtResource( 2 )]
-transform = Transform( 0.999964, 0, -0.0084822, 0, 1, 0, 0.0084822, 0, 0.999964, -3.97181, 15.8383, 0 )
+transform = Transform( 0.999964, 0, -0.0084822, 0, 1, 0, 0.0084822, 0, 0.999964, 12.845, 15.8383, 0 )
+
+[node name="CollisionShape" parent="Plane" index="0"]
+transform = Transform( 1, 0, 9.31323e-10, 0, 1, 0, -9.31323e-10, 0, 1, 0.0628741, 0.0693293, -0.000533231 )
 
 [node name="base_world" parent="." instance=ExtResource( 1 )]
 
@@ -94,6 +98,9 @@ material_override = SubResource( 20 )
 
 [node name="DirectionalLight" parent="base_world" index="2"]
 transform = Transform( 0.0555936, 0.997615, 0.0409229, -0.909093, 0.0336274, 0.415234, 0.412867, -0.0602871, 0.908794, 0, 391.65, 0 )
+
+[node name="Decor-world1" parent="base_world" index="4"]
+visible = true
 
 [node name="world2" parent="." instance=ExtResource( 1 )]
 visible = false
@@ -149,11 +156,26 @@ anims/outof_teleport = SubResource( 17 )
 
 [node name="PauseMenu" parent="." instance=ExtResource( 7 )]
 
+[node name="HUD" parent="." instance=ExtResource( 8 )]
+
+[node name="Timer2" parent="HUD/CanvasLayer/Control" index="1"]
+process_mode = 1
+
+[node name="Control2" type="Control" parent="HUD/CanvasLayer" index="2"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="package_deliv" from="Plane" to="." method="_on_Plane_package_deliv"]
 [connection signal="teleport_now" from="Plane" to="." method="_on_Plane_teleport_now"]
 [connection signal="animation_finished" from="TeleportScreen/AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
 [connection signal="animation_finished" from="TeleportScreen/AnimationPlayer" to="TeleportScreen" method="_on_AnimationPlayer_animation_finished"]
 [connection signal="animation_started" from="TeleportScreen/AnimationPlayer" to="." method="_on_AnimationPlayer_animation_started"]
 [connection signal="pressed" from="PauseMenu/PauseMenu/CenterContainer/VBoxContainer/Quit" to="." method="_on_Quit_pressed"]
+[connection signal="done" from="HUD/CanvasLayer/Control" to="." method="_on_Control_done"]
+[connection signal="timeout" from="HUD/CanvasLayer/Control/Timer2" to="." method="_on_Timer2_timeout"]
 
 [editable path="Plane"]
 [editable path="base_world"]
@@ -161,3 +183,4 @@ anims/outof_teleport = SubResource( 17 )
 [editable path="world3"]
 [editable path="world4"]
 [editable path="PauseMenu"]
+[editable path="HUD"]

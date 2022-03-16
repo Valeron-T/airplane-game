@@ -1,0 +1,20 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/BigBarn.obj-94c178b262474fc59e9c96530f08fd05.mesh"
+
+[deps]
+
+files=[ "res://.import/BigBarn.obj-94c178b262474fc59e9c96530f08fd05.mesh" ]
+
+source_file="res://Models/OBJ/BigBarn.obj"
+dest_files=[ "res://.import/BigBarn.obj-94c178b262474fc59e9c96530f08fd05.mesh", "res://.import/BigBarn.obj-94c178b262474fc59e9c96530f08fd05.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+octahedral_compression=true
+optimize_mesh_flags=4286

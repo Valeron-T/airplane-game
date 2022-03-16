@@ -1,0 +1,56 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://menu_font.tres" type="Theme" id=1]
+[ext_resource path="res://Countdown.gd" type="Script" id=2]
+[ext_resource path="res://Control2.gd" type="Script" id=3]
+
+[node name="HUD" type="Node"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 1 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="sec" type="Label" parent="CanvasLayer/Control"]
+margin_left = 1108.0
+margin_top = 23.0
+margin_right = 1180.0
+margin_bottom = 86.0
+rect_scale = Vector2( 0.798, 0.809 )
+text = "00"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Timer2" type="Timer" parent="CanvasLayer/Control"]
+process_mode = 0
+autostart = true
+
+[node name="Control2" type="Control" parent="CanvasLayer"]
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="score" type="Label" parent="CanvasLayer/Control2"]
+margin_left = 25.0
+margin_top = 22.0
+margin_right = 615.0
+margin_bottom = 85.0
+rect_scale = Vector2( 0.531638, 0.577323 )
+theme = ExtResource( 1 )
+text = "Checkpoints Reached : 0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="timeout" from="CanvasLayer/Control/Timer2" to="CanvasLayer/Control" method="_on_Timer2_timeout"]
